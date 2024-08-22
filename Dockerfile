@@ -14,7 +14,9 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release
 WORKDIR /src
 COPY ["DotnetStockAPI.csproj", "./"]
-RUN dotnet restore "DotnetStockAPI.csproj"
+
+# เพิ่ม --no-cache และ --disable-parallel เพื่อหลีกเลี่ยงปัญหาที่อาจเกิดขึ้น
+RUN dotnet restore "DotnetStockAPI.csproj" --no-cache --disable-parallel
 COPY . .
 WORKDIR "/src/."
 RUN dotnet build "DotnetStockAPI.csproj" -c $configuration -o /app/build
