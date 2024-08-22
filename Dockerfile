@@ -14,7 +14,7 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release
 WORKDIR /src
 COPY ["DotnetStockAPI.csproj", "./"]
-RUN dotnet restore "DotnetStockAPI.csproj"
+RUN dotnet nuget locals all --clear && dotnet restore "DotnetStockAPI.csproj"
 COPY . .
 WORKDIR "/src/."
 RUN dotnet build "DotnetStockAPI.csproj" -c $configuration -o /app/build
