@@ -2,21 +2,19 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 
 # On Local
-# EXPOSE 8081
-# ENV ASPNETCORE_URLS=http://+:8081
+EXPOSE 8081
+ENV ASPNETCORE_URLS=http://+:8081
 
 # On Render cloud
-EXPOSE 80
-EXPOSE 443
+# EXPOSE 80
+# EXPOSE 443
 
 USER app
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG configuration=Release
 WORKDIR /src
 COPY ["DotnetStockAPI.csproj", "./"]
-
-# เพิ่ม --no-cache และ --disable-parallel เพื่อหลีกเลี่ยงปัญหาที่อาจเกิดขึ้น
-RUN dotnet restore "DotnetStockAPI.csproj" --no-cache --disable-parallel
+RUN dotnet restore "DotnetStockAPI.csproj"
 COPY . .
 WORKDIR "/src/."
 RUN dotnet build "DotnetStockAPI.csproj" -c $configuration -o /app/build

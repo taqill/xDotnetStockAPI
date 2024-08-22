@@ -11,8 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // For Entity Framework with Npgsql
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionRender")); // Local
-    // options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionRender")); // Render
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")); // Local
 });
 
 // Adding Identity
@@ -49,6 +48,8 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins(
             // "*" // Allow all origins
+            "https://itgenius.co.th", // Allow specific origin
+            "https://*.itgenius.co.th/", // Allow subdomain
             "https://*.azurewebsites.net/", // Azure Apps
             "https://*.netlify.app/", // Netlify Apps
             "https://*.vercel.app/", // Vercel Apps
@@ -127,7 +128,7 @@ app.UseStaticFiles();
 // Redirect HTTP to HTTPS
 if (!app.Environment.IsDevelopment())
 {
-    app.UseHttpsRedirection();  
+    app.UseHttpsRedirection();  // Only use HTTPS redirection in non-development environments
 }
 
 app.UseHttpsRedirection();

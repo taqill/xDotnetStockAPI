@@ -67,7 +67,7 @@ public class AuthenticateController : ControllerBase
                 new ResponseModel
                 {
                     Status = "Error",
-                    Message = "มีชื่อผู้ใช้งานนี้ในระบบแล้ว!"
+                    Message = "ชื่อผู้ใช้งานนี้มีอยู่ในระบบแล้ว!"
                 }
             );
         }
@@ -81,7 +81,7 @@ public class AuthenticateController : ControllerBase
                 new ResponseModel
                 {
                     Status = "Error",
-                    Message = "มีอีเมลนี้ในระบบแล้ว!"
+                    Message = "อีเมลล์นี้มีอยู่ในระบบแล้ว!"
                 }
             );
         }
